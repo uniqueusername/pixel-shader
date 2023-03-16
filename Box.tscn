@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq5eaxyjxj6co"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1jm1c"]
+bounce = 0.35
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2hec5"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_akhne"]
+albedo_color = Color(0.839216, 0.352941, 0.431373, 1)
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_fxsv7"]
+material = SubResource("StandardMaterial3D_akhne")
+size = Vector3(5, 5, 5)
+
+[node name="RigidBody3D" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_1jm1c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_2hec5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_fxsv7")
+metadata/Highlight = Color(0.905882, 0, 0.466667, 1)
+metadata/Lowlight = Color(0.721569, 0.0745098, 0.431373, 1)
+metadata/Shadow = Color(0.533333, 0.129412, 0.333333, 1)
+metadata/HighThresh = 0.0
+metadata/LowThresh = 0.0

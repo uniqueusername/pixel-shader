@@ -1,0 +1,9 @@
+ColorRect
+CanvasLayer
+DirectionalLight3D
+Camera3D
+Marker3D
+MeshInstance3D
+CollisionShape3D
+RigidBody3D
+StaticBody3D

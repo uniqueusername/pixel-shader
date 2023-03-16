@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://dn5mfngeybtl8"]
+
+[ext_resource type="PackedScene" uid="uid://bq5eaxyjxj6co" path="res://Box.tscn" id="1_s7xmj"]
+[ext_resource type="Shader" path="res://Pixel.gdshader" id="2_fi8rh"]
+[ext_resource type="Shader" path="res://Toon.gdshader" id="2_wbqns"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m50tl"]
+bounce = 0.74
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2b1hr"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jfcxw"]
+albedo_color = Color(0.341176, 0, 0.807843, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c5hr7"]
+material = SubResource("StandardMaterial3D_jfcxw")
+size = Vector3(60, 2, 60)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0f4pu"]
+shader = ExtResource("2_wbqns")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mo0s2"]
+shader = ExtResource("2_fi8rh")
+shader_parameter/scale = 256.0
+
+[node name="Main" type="Node3D"]
+
+[node name="Box" parent="." instance=ExtResource("1_s7xmj")]
+transform = Transform3D(0.960445, -0.259834, -0.100163, 0.278471, 0.896165, 0.34546, 0, -0.359687, 0.933073, 0, 21.4587, -5.14461)
+physics_material_override = SubResource("PhysicsMaterial_m50tl")
+
+[node name="Box2" parent="." instance=ExtResource("1_s7xmj")]
+transform = Transform3D(0.691941, 0.673636, 0.259678, -0.721954, 0.645632, 0.248883, 8.29908e-09, -0.359687, 0.933073, -6.41174, 15.7339, -0.908276)
+physics_material_override = SubResource("PhysicsMaterial_m50tl")
+
+[node name="Box3" parent="." instance=ExtResource("1_s7xmj")]
+transform = Transform3D(0.691941, 0.673636, 0.259678, -0.32316, 0.610638, -0.722972, -0.645589, 0.416337, 0.640218, 3.89285, 11.8411, 3.67155)
+physics_material_override = SubResource("PhysicsMaterial_m50tl")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_2b1hr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_c5hr7")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 41.4146, 0.298174, 0)
+projection = 1
+size = 20.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.672181, 0.294067, 0.679484, -0.687025, 0.589833, 0.424373, -0.275988, -0.752078, 0.598506, 0, 45.1735, 14.5436)
+light_energy = 0.677
+shadow_enabled = true
+
+[node name="CelShader" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CelShader"]
+material = SubResource("ShaderMaterial_0f4pu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="PixelShader" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="PixelShader"]
+material = SubResource("ShaderMaterial_mo0s2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
