@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq5eaxyjxj6co"]
+[gd_scene load_steps=5 format=3 uid="uid://bnva3xct0xi7m"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1jm1c"]
 bounce = 0.35
@@ -10,14 +10,14 @@ size = Vector3(5, 5, 5)
 albedo_color = Color(0.839216, 0.352941, 0.431373, 1)
 metallic = 0.65
 emission_energy_multiplier = 3.22
-rim = 0.29
+rim = 0.71
 rim_tint = 1.0
 clearcoat_roughness = 0.0
 anisotropy = -1.0
 ao_light_affect = 1.0
 heightmap_scale = 4.881
 refraction_scale = 0.23
-grow_amount = 0.703
+grow_amount = -2.462
 proximity_fade_distance = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_fxsv7"]

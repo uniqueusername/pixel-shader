@@ -6,3 +6,9 @@ res://OmniLight3D.gd
 res://MeshInstance3D.gd
 res://Outline.gdshader
 res://Marker3D.gd
+res://Outline2.gdshader
+res://Depth.gdshader
+res://PxOutline.gdshader
+res://Camera3D.gd
+res://camera.tscn
+res://pixelart_stylizer.gdshader

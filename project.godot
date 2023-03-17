@@ -17,11 +17,21 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=240
+window/size/viewport_height=135
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [editor]
 
 movie_writer/mjpeg_quality=1.0
 movie_writer/movie_file="C:/Users/aryan/Videos/pixer caps/capture.avi"
 movie_writer/disable_vsync=true
+
+[rendering]
+
+global_illumination/voxel_gi/quality=1
+environment/ssao/quality=4
+environment/ssil/quality=4
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+environment/screen_space_reflection/roughness_quality=0

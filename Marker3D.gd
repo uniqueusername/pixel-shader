@@ -10,7 +10,7 @@ func _ready():
 func _process(delta):
 	if (get_meta("carousel")):
 		$Camera3D.size = 50;
-		set_rotation(get_rotation() + 
-			Vector3(0.0, 0.001, 0.0));
+		set_rotation(Vector3(0.0, Time.get_ticks_msec() * 0.0003, 0.5));
 	else:
 		$Camera3D.size = 20;
+		set_rotation(Vector3(0.0, 0.0, 45));

@@ -1,6 +1,8 @@
+WorldEnvironment
+SubViewport
+MeshInstance3D
 ColorRect
 CanvasLayer
-MeshInstance3D
 OmniLight3D
 DirectionalLight3D
 Camera3D
