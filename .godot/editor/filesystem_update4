@@ -1,5 +1,8 @@
 res://Main.tscn
-res://Pixel.gdshader
-res://Toon.gdshader
 res://Box.tscn
-res://Pixel2.gdshader
+res://Toon.gdshader
+res://Pixel.gdshader
+res://OmniLight3D.gd
+res://MeshInstance3D.gd
+res://Outline.gdshader
+res://Marker3D.gd

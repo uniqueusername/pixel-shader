@@ -1,8 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://dn5mfngeybtl8"]
+[gd_scene load_steps=17 format=3 uid="uid://dn5mfngeybtl8"]
 
 [ext_resource type="PackedScene" uid="uid://bq5eaxyjxj6co" path="res://Box.tscn" id="1_s7xmj"]
+[ext_resource type="Script" path="res://OmniLight3D.gd" id="2_bopsy"]
 [ext_resource type="Shader" path="res://Pixel.gdshader" id="2_fi8rh"]
 [ext_resource type="Shader" path="res://Toon.gdshader" id="2_wbqns"]
+[ext_resource type="Script" path="res://MeshInstance3D.gd" id="3_f117e"]
+[ext_resource type="Shader" path="res://Outline.gdshader" id="4_iifdp"]
+[ext_resource type="Script" path="res://Marker3D.gd" id="4_m33hw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ue6g2"]
+emission_enabled = true
+emission = Color(0.423529, 0.862745, 1, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_uv6vq"]
+material = SubResource("StandardMaterial3D_ue6g2")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m50tl"]
 bounce = 0.74
@@ -17,14 +29,34 @@ albedo_color = Color(0.341176, 0, 0.807843, 1)
 material = SubResource("StandardMaterial3D_jfcxw")
 size = Vector3(60, 2, 60)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0f4pu"]
-shader = ExtResource("2_wbqns")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mo0s2"]
 shader = ExtResource("2_fi8rh")
-shader_parameter/scale = 256.0
+shader_parameter/scale = 224.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6h82b"]
+shader = ExtResource("4_iifdp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0f4pu"]
+shader = ExtResource("2_wbqns")
+shader_parameter/step_size = 13.0
 
 [node name="Main" type="Node3D"]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 1.86265e-08, -8.88178e-16, -1.86265e-08, 1, -2.98023e-08, 0, 2.98023e-08, 1, 5.08216, 1.28197, -0.357743)
+light_color = Color(0.682353, 0.631373, 0.929412, 1)
+light_energy = 16.0
+light_specular = 3.086
+shadow_enabled = true
+shadow_bias = 0.605
+omni_range = 48.325
+script = ExtResource("2_bopsy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OmniLight3D"]
+transform = Transform3D(0.455101, 0.796053, 0.398977, -0.799419, 0.56262, -0.210686, -0.39219, -0.223067, 0.892429, 0, 0, 0)
+gi_mode = 2
+mesh = SubResource("BoxMesh_uv6vq")
+script = ExtResource("3_f117e")
 
 [node name="Box" parent="." instance=ExtResource("1_s7xmj")]
 transform = Transform3D(0.960445, -0.259834, -0.100163, 0.278471, 0.896165, 0.34546, 0, -0.359687, 0.933073, 0, 21.4587, -5.14461)
@@ -48,21 +80,28 @@ mesh = SubResource("BoxMesh_c5hr7")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("4_m33hw")
+metadata/carousel = false
 
 [node name="Camera3D" type="Camera3D" parent="Marker3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 41.4146, 0.298174, 0)
 projection = 1
-size = 20.0
+size = 50.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.672181, 0.294067, 0.679484, -0.687025, 0.589833, 0.424373, -0.275988, -0.752078, 0.598506, 0, 45.1735, 14.5436)
+transform = Transform3D(0.672181, 0.294067, 0.679483, -0.687025, 0.589834, 0.424374, -0.275988, -0.752078, 0.598506, 0, 45.1735, 14.5436)
 light_energy = 0.677
 shadow_enabled = true
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.019
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 973.3
+directional_shadow_pancake_size = 188.0
 
-[node name="CelShader" type="CanvasLayer" parent="."]
+[node name="PixelShader" type="CanvasLayer" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="CelShader"]
-material = SubResource("ShaderMaterial_0f4pu")
+[node name="ColorRect" type="ColorRect" parent="PixelShader"]
+material = SubResource("ShaderMaterial_mo0s2")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -70,10 +109,20 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="PixelShader" type="CanvasLayer" parent="."]
+[node name="OutlineShader" type="CanvasLayer" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="PixelShader"]
-material = SubResource("ShaderMaterial_mo0s2")
+[node name="ColorRect" type="ColorRect" parent="OutlineShader"]
+material = SubResource("ShaderMaterial_6h82b")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CelShader" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CelShader"]
+material = SubResource("ShaderMaterial_0f4pu")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
