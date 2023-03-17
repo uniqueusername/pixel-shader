@@ -54,11 +54,11 @@ void vertex(){
 }
 
 void fragment() {
-	vec2 e = vec2(1./VIEWPORT_SIZE.xy);
+	vec2 e = vec2(3./VIEWPORT_SIZE.xy);
 	
 //	Shadows
-	float depth_diff = 0.0;
-	float neg_depth_diff = .5;
+	float depth_diff = 0.;
+	float neg_depth_diff = .1;
 	if (shadows_enabled) {
 		float depth = getDepth(SCREEN_UV, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
 		float du = getDepth(SCREEN_UV+vec2(0., -1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);

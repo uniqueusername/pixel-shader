@@ -10,14 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://betr6g2ljaaru" path="res://camera.tscn" id="5_i04sb"]
 [ext_resource type="Shader" path="res://Depth.gdshader" id="6_fqobo"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ue6g2"]
-emission_enabled = true
-emission = Color(0.423529, 0.862745, 1, 1)
-emission_energy_multiplier = 16.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_uv6vq"]
-material = SubResource("StandardMaterial3D_ue6g2")
-
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m50tl"]
 bounce = 0.74
 
@@ -43,6 +35,14 @@ material = SubResource("ShaderMaterial_f6ppb")
 flip_faces = true
 size = Vector2(10, 10)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ue6g2"]
+emission_enabled = true
+emission = Color(0.423529, 0.862745, 1, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_uv6vq"]
+material = SubResource("StandardMaterial3D_ue6g2")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6h82b"]
 shader = ExtResource("4_iifdp")
 shader_parameter/trans_thresh = 1.08
@@ -53,37 +53,16 @@ shader_parameter/step_size = 13.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mo0s2"]
 shader = ExtResource("2_fi8rh")
-shader_parameter/scale = 224.0
+shader_parameter/scale = 512.0
 
 [sub_resource type="Environment" id="Environment_tpwjm"]
 background_mode = 1
 background_color = Color(0.85098, 0.607843, 0.972549, 1)
 sky_custom_fov = 6.2
+ambient_light_source = 3
 ambient_light_color = Color(0.419608, 0.901961, 0.913725, 1)
 
 [node name="Main" type="Node3D"]
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 1.86265e-08, -8.88178e-16, -1.86265e-08, 1, -2.98023e-08, 0, 2.98023e-08, 1, 5.08216, 1.28197, -0.357743)
-light_color = Color(0.682353, 0.631373, 0.929412, 1)
-light_energy = 16.0
-light_specular = 3.086
-shadow_enabled = true
-shadow_bias = 0.605
-omni_range = 48.325
-script = ExtResource("2_bopsy")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="OmniLight3D"]
-transform = Transform3D(0.455101, 0.796053, 0.398977, -0.799419, 0.56262, -0.210686, -0.39219, -0.223067, 0.892429, 0, 0, 0)
-gi_mode = 2
-mesh = SubResource("BoxMesh_uv6vq")
-script = ExtResource("3_f117e")
-
-[node name="Box4" parent="." instance=ExtResource("1_s7xmj")]
-transform = Transform3D(0.850098, -0.446383, -0.279423, 0.517012, 0.606498, 0.604036, -0.100162, -0.657953, 0.746368, -0.385024, -6.36137, -17.5163)
-visible = false
-physics_material_override = SubResource("PhysicsMaterial_m50tl")
-gravity_scale = 0.0
 
 [node name="Box" parent="." instance=ExtResource("1_s7xmj")]
 transform = Transform3D(0.960445, -0.259834, -0.100163, 0.278471, 0.896165, 0.34546, 0, -0.359687, 0.933073, 0, 21.4587, -5.14461)
@@ -108,16 +87,18 @@ mesh = SubResource("BoxMesh_c5hr7")
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("4_m33hw")
-metadata/carousel = false
+metadata/carousel = true
 
 [node name="Camera" parent="Marker3D" instance=ExtResource("5_i04sb")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 41, 0.3, 0)
+current = false
 size = 20.0
 near = 0.005
 
 [node name="Camera3D" type="Camera3D" parent="Marker3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 41.4146, 0.298174, 0)
 projection = 1
+current = true
 size = 50.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Marker3D/Camera3D"]
@@ -135,6 +116,22 @@ directional_shadow_split_1 = 0.019
 directional_shadow_fade_start = 1.0
 directional_shadow_max_distance = 973.3
 directional_shadow_pancake_size = 188.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 1.86265e-08, -5.55112e-16, -1.86265e-08, 1, -2.98023e-08, 0, 2.98023e-08, 1, 5.08216, 1.28197, -0.357743)
+light_color = Color(0.682353, 0.631373, 0.929412, 1)
+light_energy = 16.0
+light_specular = 3.086
+shadow_enabled = true
+shadow_bias = 0.605
+omni_range = 48.325
+script = ExtResource("2_bopsy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OmniLight3D"]
+transform = Transform3D(0.455101, 0.796053, 0.398977, -0.799419, 0.56262, -0.210686, -0.39219, -0.223067, 0.892429, 0, 0, 0)
+gi_mode = 2
+mesh = SubResource("BoxMesh_uv6vq")
+script = ExtResource("3_f117e")
 
 [node name="OutlineShader" type="CanvasLayer" parent="."]
 visible = false
@@ -159,7 +156,6 @@ grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="PixelShader" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="PixelShader"]
 material = SubResource("ShaderMaterial_mo0s2")
