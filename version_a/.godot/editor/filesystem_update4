@@ -1,0 +1,5 @@
+res://Main.tscn
+res://Camera3D.gd
+res://Depth.gdshader
+res://Box.tscn
+res://camera.tscn
